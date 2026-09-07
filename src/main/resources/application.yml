@@ -1,0 +1,45 @@
+spring:
+
+  application:
+    name: workflow
+
+  profiles:
+    active: dev
+
+  jackson:
+    default-property-inclusion: non_null
+    serialization:
+      write-dates-as-timestamps: false
+    time-zone: UTC
+
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+
+server:
+  port: 8082
+
+management:
+
+  endpoints:
+
+    web:
+
+      exposure:
+
+        include: health,info,metrics
+
+  endpoint:
+
+    health:
+
+      show-details: always
+
+logging:
+
+  level:
+
+    root: INFO
+
+    com.abcbank.workflow: DEBUG
