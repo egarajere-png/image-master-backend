@@ -12,6 +12,15 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Turns a Keycloak JWT into Spring's authentication object. Reads
+ * roles from both realm_access.roles and every client's entry
+ * under resource_access, prefixes each with ROLE_ (so ROLE_ADMIN
+ * matches what AdminAccessGuard and the various controllers check
+ * for). Sets the token's subject as the authentication name, which
+ * is what has to match users.keycloak_id everywhere else in the app.
+ */
+
 @Component
 public class JwtAuthConverter
         implements Converter<Jwt, AbstractAuthenticationToken> {

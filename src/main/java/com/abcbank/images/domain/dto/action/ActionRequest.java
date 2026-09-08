@@ -4,6 +4,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
+/** Payload for creating/updating an Action (a workflow verb like UPLOAD or AMEND). */
+
 @Getter
 @Setter
 @NoArgsConstructor

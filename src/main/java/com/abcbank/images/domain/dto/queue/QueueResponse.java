@@ -5,6 +5,9 @@ import lombok.*;
 
 import java.time.OffsetDateTime;
 
+/** What the frontend gets back for a queue. 
+ * departmentId/departmentName added (via QueueMapper) so Admin → Queues can show and validate each queue's branch. */
+
 @Getter
 @Setter
 @NoArgsConstructor

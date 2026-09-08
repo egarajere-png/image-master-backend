@@ -10,6 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/** Returns all workflow activity performed by a given user (their full ItemTransition history) — a thin wrapper over ItemTransitionRepository.findByPerformedBy. 
+ * Not currently called from any controller; kept for a future "my activity" view. */
+
 @Service
 @RequiredArgsConstructor
 public class AuditService {

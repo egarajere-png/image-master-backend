@@ -6,6 +6,9 @@ import com.abcbank.images.domain.entities.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+/** Straightforward entity → response mapping for User.java 
+ * — no custom logic beyond flattening a direct relationship or two into flat IDs/names. */
+
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 

@@ -18,6 +18,15 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * REST endpoints for queues: CRUD (admin-only writes), queue-user
+ * membership, and queue-action wiring. GET /queues/active is the
+ * one non-admin endpoint that matters most — it's what "My Queue"
+ * calls, and it's department-filtered via
+ * QueueService.getAccessibleQueues(), which only works correctly
+ * now that queues actually persist a department (migration V14).
+ */
+
 @RestController
 @RequestMapping("/api/v1/queues")
 @RequiredArgsConstructor

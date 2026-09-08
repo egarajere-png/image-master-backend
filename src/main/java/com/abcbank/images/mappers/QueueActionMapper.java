@@ -5,6 +5,10 @@ import com.abcbank.images.domain.entities.QueueAction;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+
+/** Straightforward entity → response mapping for QueueAction.java 
+ * — no custom logic beyond flattening a direct relationship or two into flat IDs/names. */
+
 @Mapper(componentModel = "spring")
 public interface QueueActionMapper {
 

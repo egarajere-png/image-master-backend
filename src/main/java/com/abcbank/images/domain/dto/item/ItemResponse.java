@@ -5,6 +5,14 @@ import lombok.*;
 
 import java.time.OffsetDateTime;
 
+/**
+ * What the frontend gets back for an item. Extended with
+ * idNumber/customerName/phoneNumber (the required identity fields)
+ * and departmentId/departmentName (via ItemMapper, mapped from the
+ * item's own department — not the viewer's) so the UI can show
+ * which branch an item belongs to.
+ */
+
 @Getter
 @Setter
 @NoArgsConstructor

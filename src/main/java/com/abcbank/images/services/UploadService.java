@@ -8,6 +8,23 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+/**
+ * Orchestrates "upload an image and create its workflow item" in
+ * one call: stores the file, builds its URL, creates the item via
+ * ItemService.create() (which now also runs the UPLOAD action
+ * automatically), and returns a response reflecting wherever that
+ * landed the item — not the initial queue.
+ *
+ * Exception handling was tightened: business exceptions from
+ * ItemService (e.g. "no transition configured for UPLOAD in this
+ * department") now propagate with their original type/message
+ * instead of being wrapped in a generic FileProcessingException, so
+ * the frontend gets a meaningful error instead of a bare 500. Either
+ * way, the physical file is deleted if anything downstream fails, so
+ * a failed upload never leaves an orphaned file on disk.
+ */
+
+
 @Service
 @RequiredArgsConstructor
 public class UploadService {

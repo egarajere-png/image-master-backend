@@ -10,6 +10,16 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.web.SecurityFilterChain;
 
+/**
+ * Wires Spring Security as a stateless JWT resource server.
+ * Public (no-auth) routes: actuator health, Swagger UI, POST
+ * /auth/token (has to be reachable before a token exists), and
+ * GET /uploads/files/** (serving already-uploaded images). Every
+ * other route requires a valid bearer token; role extraction is
+ * delegated to JwtAuthConverter.
+ */
+
+
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity

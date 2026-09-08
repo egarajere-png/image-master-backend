@@ -14,6 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/** Admin-facing CRUD for Department (branches), plus assign/remove-user and list-users-in-department. 
+ * delete() refuses to remove a department that still has users assigned, to avoid silently orphaning them. */
+
 @Service
 @RequiredArgsConstructor
 public class DepartmentService {

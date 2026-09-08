@@ -5,6 +5,13 @@ import lombok.*;
 
 import java.time.OffsetDateTime;
 
+/**
+ * Join entity: which users are members of which queue. Membership
+ * here is what WorkflowService checks before letting someone
+ * execute an action — being in the right department alone isn't
+ * enough, you also have to be assigned to that specific queue.
+ */
+
 @Entity
 @Table(
         name = "queue_users",

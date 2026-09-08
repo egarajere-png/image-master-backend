@@ -15,6 +15,16 @@ import java.nio.file.*;
 import java.util.Set;
 import java.util.UUID;
 
+/**
+ * Local-disk image storage — stores under file.storage.location
+ * (defaults to uploads/images), validates file type/size, and
+ * guards against path traversal by confirming every resolved path
+ * stays inside the configured storage root before reading or
+ * deleting. Used by UploadService (new uploads) and
+ * ItemService.amendWithImage() (photo replacement on AMEND).
+ */
+
+
 @Service
 public class FileStorageService {
 

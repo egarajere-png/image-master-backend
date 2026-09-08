@@ -5,6 +5,21 @@ import lombok.*;
 
 import java.time.OffsetDateTime;
 
+/**
+ * A locally-mirrored Keycloak user, created on first login
+ * (UserService.getOrCreateUser).
+ *
+ * isAdmin: mapped to a users.is_admin column that was missing from
+ * every migration until V15 — the field existed in code from the
+ * start but Hibernate schema validation only caught the gap once a
+ * fully clean database was validated against it. The very first
+ * user ever created is auto-promoted to admin.
+ *
+ * department: nullable — a brand-new user has no department until
+ * an admin assigns one (Admin → Users / Departments), and can't
+ * start or act on any workflow item until they do.
+ */
+
 @Entity
 @Table(
         name = "users",

@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/** REST endpoints for departments (branches): CRUD, assign/remove user, and list users in a department — all writes admin-gated via AdminAccessGuard. 
+ * GET endpoints stay open since department names/lists aren't sensitive. */
+
 @RestController
 @RequestMapping("/api/v1/departments")
 @RequiredArgsConstructor

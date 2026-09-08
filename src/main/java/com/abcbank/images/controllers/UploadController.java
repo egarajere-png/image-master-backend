@@ -16,6 +16,19 @@ import org.springframework.web.multipart.MultipartFile;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * POST /uploads — the "Start Queue" endpoint. idNumber, customerName,
+ * and phoneNumber are now required @RequestParams (previously only
+ * the file was required), matching the same fields required on
+ * ItemRequest. Also now computes adminRole and passes it through to
+ * UploadService, same as ItemController.
+ *
+ * GET /uploads/files/{filename} serves a stored image back —
+ * public, no auth required (see SecurityConfig), since it's just
+ * static file content once you have the URL.
+ */
+
+
 @RestController
 @RequestMapping("/api/v1/uploads")
 @RequiredArgsConstructor

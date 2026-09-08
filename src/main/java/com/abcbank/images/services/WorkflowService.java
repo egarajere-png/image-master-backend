@@ -24,6 +24,23 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * The workflow engine — executeAction() is the single place every
+ * item move goes through, whether triggered by a Teller picking an
+ * action from the ActionPanel, the automatic UPLOAD run right after
+ * item creation, or the AMEND call from ItemService.amendWithImage().
+ *
+ * On every call it: loads the item, confirms it's ACTIVE, confirms
+ * the acting user is a member of the item's current queue
+ * (QueueUserRepository), finds the QueueAction for (queue, action
+ * name), resolves the Transition for (queueAction, user's department)
+ * — this department lookup is what keeps one branch's routing
+ * independent of another's even for actions with the same name —
+ * then either moves the item to the destination queue or marks it
+ * COMPLETED/REMOVED, and writes an ItemTransition audit row
+ * regardless of which happened.
+ */
+
 @Service
 @RequiredArgsConstructor
 public class WorkflowService {

@@ -5,6 +5,15 @@ import lombok.*;
 
 import java.time.OffsetDateTime;
 
+/**
+ * Audit-log row written every time an item moves — one row per
+ * action execution, capturing who did it, from which queue, to
+ * which queue (or terminal outcome), and any comment left. This is
+ * the data behind the workflow history/timeline shown on the item
+ * detail page, and behind QueuePositionTrack's "how far has this
+ * item progressed" view.
+ */
+
 @Entity
 @Table(
         name = "item_transitions",

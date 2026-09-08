@@ -3,6 +3,10 @@ package com.abcbank.images.domain.dto.transition;
 import com.abcbank.images.domain.enums.WorkflowOutcome;
 import lombok.*;
 
+/** Full readable view of a Transition — source queue, action, department, 
+ * and destination/outcome all flattened out via TransitionMapper, 
+ * since the raw entity is three joins deep. */
+
 @Getter
 @Setter
 @NoArgsConstructor

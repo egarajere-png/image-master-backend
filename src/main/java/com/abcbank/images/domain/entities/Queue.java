@@ -6,6 +6,21 @@ import lombok.*;
 
 import java.time.OffsetDateTime;
 
+/**
+ * A single stage in the workflow (e.g. "Teller", "Branch Manager").
+ *
+ * Queues are department-scoped: the `department` field (backed by
+ * migration V14) means each branch has its own physical Teller
+ * queue, its own Branch Manager queue, etc. — two branches never
+ * share a queue row, even if they're named the same thing. Before
+ * V14 this field existed on the entity but had no backing column,
+ * which silently broke every non-admin user's "My Queue" page.
+ *
+ * `initial` marks the one queue per department where new items
+ * enter (enforced by a partial unique index scoped to department_id,
+ * not globally — each branch needs its own entry point).
+ */
+
 @Entity
 @Table(
         name = "queues",

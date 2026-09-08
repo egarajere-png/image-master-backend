@@ -9,6 +9,16 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * Central admin-only gate, called at the top of every admin-write
+ * endpoint. Passes immediately if the JWT carries ROLE_ADMIN;
+ * otherwise falls back to checking whether the locally-mirrored
+ * user's department is literally "Administration"
+ * (UserService.ADMINISTRATION_DEPARTMENT_NAME) — kept as a fallback
+ * in case admin status was granted by department assignment rather
+ * than a Keycloak role.
+ */
+
 @Component
 @RequiredArgsConstructor
 public class AdminAccessGuard {

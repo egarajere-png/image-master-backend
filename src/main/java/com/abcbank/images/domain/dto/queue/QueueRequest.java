@@ -5,6 +5,13 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
+/**
+ * Payload for creating/updating a queue. departmentId is @NotNull —
+ * queues used to be creatable without a department, which is
+ * exactly what left every pre-V14 queue unreachable by non-admins.
+ * Every queue now has to declare which branch it belongs to.
+ */
+
 @Getter
 @Setter
 @NoArgsConstructor

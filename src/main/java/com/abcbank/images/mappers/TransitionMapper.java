@@ -5,6 +5,9 @@ import com.abcbank.images.domain.entities.Transition;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+/** Entity → response mapping for Transition. Flattens three levels of joins (queueAction.queue, queueAction.action, department, destinationQueue) 
+ * into flat IDs/names so the frontend doesn't have to walk the object graph itself. */
+
 @Mapper(componentModel = "spring")
 public interface TransitionMapper {
 

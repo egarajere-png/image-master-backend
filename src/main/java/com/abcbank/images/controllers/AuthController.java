@@ -10,6 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
+/** GET /auth/me resolves (and lazily creates) the current user from their JWT and returns CurrentUserResponse — this is what AuthContext hydrates from on every page load. 
+ * POST /auth/token proxies a username/password straight to Keycloak (via KeycloakService) so the login form doesn't have to talk to Keycloak directly. */
+
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor

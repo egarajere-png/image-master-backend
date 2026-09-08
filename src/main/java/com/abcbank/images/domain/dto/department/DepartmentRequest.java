@@ -4,6 +4,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
+/** Payload for creating/updating a department (branch) — just a name and optional description; 
+ * nothing else about a department is mutable directly. */
+
 @Getter
 @Setter
 @NoArgsConstructor

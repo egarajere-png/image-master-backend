@@ -9,6 +9,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
+/** findByQueueActionAndDepartment is the core lookup WorkflowService.executeAction runs on every action 
+ * — it's what resolves "given this queue+action+department, where does the item go next". */
+
 public interface TransitionRepository
         extends JpaRepository<Transition, Long> {
 

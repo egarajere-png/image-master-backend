@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/** Admin-facing CRUD for Action (the named workflow verbs) — name uniqueness enforced on create and update. */
+
 @Service
 @RequiredArgsConstructor
 public class ActionService {

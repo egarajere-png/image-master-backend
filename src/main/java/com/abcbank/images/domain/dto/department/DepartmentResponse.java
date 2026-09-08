@@ -4,6 +4,8 @@ import lombok.*;
 
 import java.time.OffsetDateTime;
 
+/** What the frontend gets back for a department. */
+
 @Getter
 @Setter
 @NoArgsConstructor

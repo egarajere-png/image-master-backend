@@ -6,6 +6,20 @@ import lombok.*;
 
 import java.time.OffsetDateTime;
 
+/**
+ * The actual routing rule: for a given (QueueAction, Department)
+ * pair, either move the item to `destinationQueue` or end the
+ * workflow with `outcome` (COMPLETED/REMOVED) — never both, never
+ * neither (enforced in TransitionService.validateTransitionConfiguration).
+ *
+ * This is what WorkflowService.executeAction looks up on every
+ * action call, and what ItemService.create() relies on for the
+ * automatic UPLOAD transition run right after an item is created.
+ * The unique constraint (queue_action_id, department_id) means each
+ * department configures its own routing even for actions shared
+ * across all branches.
+ */
+
 @Entity
 @Table(
         name = "transitions",

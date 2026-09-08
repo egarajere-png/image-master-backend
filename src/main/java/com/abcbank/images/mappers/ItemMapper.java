@@ -5,6 +5,13 @@ import com.abcbank.images.domain.entities.Item;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+/**
+ * Entity → response mapping for Item. departmentId/departmentName
+ * mapped explicitly from item.department (added alongside the
+ * department-scoping work); idNumber/customerName/phoneNumber map
+ * automatically since the DTO and entity field names already match.
+ */
+
 @Mapper(componentModel = "spring")
 public interface ItemMapper {
 

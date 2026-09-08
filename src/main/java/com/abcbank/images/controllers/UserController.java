@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/** Read-only endpoints for users: list all, get by id. 
+ * Used by Admin → Users and by the member-search additions in the Department/Queue management drawers. */
+
 @RestController
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor

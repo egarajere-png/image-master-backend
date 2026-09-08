@@ -5,6 +5,16 @@ import lombok.*;
 
 import java.time.OffsetDateTime;
 
+/**
+ * A bank branch (e.g. "Westlands", "Koinange"), or the special
+ * "Administration" department used to mark admin users (see
+ * UserService.ADMINISTRATION_DEPARTMENT_NAME).
+ *
+ * Every User and every Queue belongs to exactly one Department —
+ * this is the root of the branch-isolation model: a user only ever
+ * sees queues/items scoped to their own department.
+ */
+
 @Entity
 @Table(
         name = "departments",

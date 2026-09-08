@@ -6,6 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/** Mirrors Keycloak's OAuth2 token response shape (access_token, refresh_token, expires_in, ...)
+ *  so AuthController can pass it straight back to the frontend unchanged. */
+
 @Data
 @Builder
 @NoArgsConstructor

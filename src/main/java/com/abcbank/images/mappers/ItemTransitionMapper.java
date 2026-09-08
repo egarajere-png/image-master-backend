@@ -5,6 +5,9 @@ import com.abcbank.images.domain.entities.ItemTransition;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+/** Entity → response mapping for ItemTransition (the audit log). 
+ * Flattens item/transition/performedBy/sourceQueue/destinationQueue into flat IDs/names for the history timeline UI. */
+
 @Mapper(componentModel = "spring")
 public interface ItemTransitionMapper {
 

@@ -8,6 +8,8 @@ import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/** Swagger/OpenAPI setup — registers the bearer-token auth scheme so "Try it out" in Swagger UI can send a real JWT. */
+
 @Configuration
 public class OpenApiConfig {
 

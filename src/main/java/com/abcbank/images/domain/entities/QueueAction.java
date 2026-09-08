@@ -5,6 +5,13 @@ import lombok.*;
 
 import java.time.OffsetDateTime;
 
+/**
+ * Join entity: says "this Action is executable from this Queue"
+ * (e.g. Teller queue supports UPLOAD and AMEND). Doesn't say where
+ * it goes — that's Transition's job, keyed off this pairing plus a
+ * department.
+ */
+
 @Entity
 @Table(
         name = "queue_actions",

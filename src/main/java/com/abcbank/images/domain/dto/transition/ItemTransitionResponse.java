@@ -4,6 +4,10 @@ import lombok.*;
 
 import java.time.OffsetDateTime;
 
+/** One row of an item's workflow history — who acted, 
+ * from which queue to which, when, and any comment. This is what powers the item detail page's timeline. */
+
+
 @Getter
 @Setter
 @NoArgsConstructor

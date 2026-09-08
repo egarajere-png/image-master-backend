@@ -21,6 +21,28 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
+/**
+ * Core item lifecycle: create, read (by id/queue/status/creator),
+ * execute a workflow action, amend, and fetch history.
+ *
+ * create() now does three things it didn't originally: (1) roots
+ * the new item in the creating Teller's own department, (2) resolves
+ * that department's own initial queue (not a single global one —
+ * see QueueRepository.findByInitialTrueAndDepartment), and (3)
+ * immediately runs the "UPLOAD" workflow action via WorkflowService
+ * right after saving, so starting a queue actually advances the item
+ * instead of leaving it sitting in the initial queue until someone
+ * manually acts on it.
+ *
+ * amendWithImage() is new: lets a Teller replace an item's photo
+ * and/or correct its identity fields, persists that first, then runs
+ * the "AMEND" action through the normal WorkflowService path — so a
+ * returned item is fixed and re-submitted in one request. If the
+ * AMEND transition itself fails, the newly-uploaded replacement file
+ * is deleted so it doesn't orphan on disk.
+ */
+
+
 @Service
 @RequiredArgsConstructor
 public class ItemService {

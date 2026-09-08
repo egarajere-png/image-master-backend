@@ -25,6 +25,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * Admin-facing CRUD for Transition rows (the routing table), plus
+ * the read paths used to answer "what actions can this queue/queue-
+ * action/department do" and to serve item history
+ * (getItemHistory/getLatestItemHistory — backs the workflow timeline
+ * and QueuePositionTrack). validateTransitionConfiguration enforces
+ * the "destination queue XOR outcome, never both, never neither"
+ * rule on every create/update.
+ */
+
 @Service
 @RequiredArgsConstructor
 public class TransitionService {

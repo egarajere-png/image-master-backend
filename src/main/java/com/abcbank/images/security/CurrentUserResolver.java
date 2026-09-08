@@ -8,6 +8,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;
 
+/** Pulls the authenticated Keycloak identity (subject, username, email, name, roles) out of the current SecurityContext into a plain SecurityUser record,
+ *  for services that need it without a controller passing it down explicitly. */
+
 @Component
 @RequiredArgsConstructor
 public class CurrentUserResolver {

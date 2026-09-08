@@ -14,6 +14,16 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * REST endpoints for transitions and item history, under
+ * /api/v1/workflow — the "real" one the frontend actually calls
+ * (see the duplication note on TransitionController). Transition
+ * writes are admin-gated; GET /queues/{id}/transitions and
+ * GET /items/{id}/history stay open for every authenticated user
+ * since ActionPanel and the item detail page depend on them
+ * regardless of role.
+ */
+
 @RestController
 @RequestMapping("/api/v1/workflow")
 @RequiredArgsConstructor

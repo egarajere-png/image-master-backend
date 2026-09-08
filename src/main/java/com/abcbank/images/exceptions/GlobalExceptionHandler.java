@@ -15,6 +15,18 @@ import java.time.OffsetDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * Central @RestControllerAdvice — every exception thrown anywhere
+ * in the app funnels through here into a consistent
+ * ApiErrorResponse shape (timestamp/status/error/message/path,
+ * plus per-field errors for validation failures).
+ * IllegalStateException now maps to 400 instead of falling through
+ * to the generic 500 handler — it's used for business-rule
+ * violations (e.g. deleting a department that still has users
+ * assigned) that are the client's mistake, not a server fault, and
+ * deserve their actual message reaching the frontend.
+ */
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 

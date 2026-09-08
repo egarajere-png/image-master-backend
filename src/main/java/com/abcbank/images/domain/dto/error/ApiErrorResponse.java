@@ -5,6 +5,9 @@ import lombok.*;
 import java.time.OffsetDateTime;
 import java.util.Map;
 
+/** Uniform error shape returned by every handler in GlobalExceptionHandler 
+ *  - timestamp, HTTP status, message, request path, and optional per-field validation errors. */
+
 @Getter
 @Setter
 @NoArgsConstructor

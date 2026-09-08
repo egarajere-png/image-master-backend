@@ -5,6 +5,13 @@ import lombok.*;
 
 import java.time.OffsetDateTime;
 
+/**
+ * A named workflow verb (UPLOAD, AMEND, APPROVE, DECLINE, ...).
+ * Actions are global vocabulary — they get attached to specific
+ * queues via QueueAction, and given department-specific routing
+ * via Transition. On its own this entity is just a name + description.
+ */
+
 @Entity
 @Table(
         name = "actions",

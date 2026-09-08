@@ -13,6 +13,24 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * User lookup/creation from Keycloak identity, plus the current-
+ * user resolution used by /auth/me.
+ *
+ * getOrCreateUser() auto-promotes the very first user ever created
+ * to admin and drops them into the "Administration" department —
+ * this only works now that is_admin actually exists as a column
+ * (migration V15; the field was mapped in code from the start but
+ * had no backing column until then).
+ *
+ * getCurrentUser() also syncs admin status from the Keycloak JWT's
+ * ROLE_ADMIN authority on every call (not just at creation), and
+ * moves a newly-admin user into the Administration department if
+ * they aren't in it yet — isAdmin itself stays the actual source of
+ * truth for authorization (see AdminAccessGuard), department
+ * placement is a convenience that follows it.
+ */
+
 @Service
 @RequiredArgsConstructor
 public class UserService {

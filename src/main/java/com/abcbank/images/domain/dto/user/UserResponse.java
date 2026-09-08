@@ -4,6 +4,9 @@ import lombok.*;
 
 import java.time.OffsetDateTime;
 
+/** What the frontend gets back for a user in admin lists (Admin → Users) 
+ * — includes departmentId/departmentName so the assign/remove UI can show current placement. */
+
 @Getter
 @Setter
 @NoArgsConstructor

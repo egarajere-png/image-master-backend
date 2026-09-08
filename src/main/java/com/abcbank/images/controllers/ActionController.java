@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/** REST endpoints for actions (the named workflow verbs): CRUD, admin-gated writes, open reads. */
+
 @RestController
 @RequestMapping("/api/v1/actions")
 @RequiredArgsConstructor

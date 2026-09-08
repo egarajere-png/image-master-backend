@@ -10,6 +10,9 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+/** Thin client for Keycloak's token endpoint — exchanges a username/password 
+ * for an access/refresh token pair (password grant), used by AuthController's /auth/token proxy. */
+
 @Service
 @RequiredArgsConstructor
 public class KeycloakService {

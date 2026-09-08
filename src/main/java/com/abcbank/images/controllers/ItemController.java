@@ -18,6 +18,23 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
+/**
+ * REST endpoints for items: create, read (by id/all/active/queue/
+ * status/creator), execute a workflow action, and fetch history.
+ *
+ * create() and executeAction() now compute and pass adminRole
+ * (from the ROLE_ADMIN JWT authority) into the service layer,
+ * matching the pattern already used elsewhere — WorkflowService
+ * needs it to know whether to bypass the normal queue-membership
+ * check for an admin acting on someone else's queue.
+ *
+ * amend() is new: POST /{itemId}/amend, multipart, lets a Teller
+ * replace an item's photo and/or correct its identity fields in the
+ * same request that executes the AMEND action — this is the
+ * endpoint the frontend's ActionPanel was previously missing.
+ */
+
+
 @RestController
 @RequestMapping("/api/v1/items")
 @RequiredArgsConstructor

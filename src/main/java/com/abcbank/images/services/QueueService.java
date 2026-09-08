@@ -27,6 +27,23 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * Queue CRUD plus queue-membership and queue-action management.
+ *
+ * create()/update() now require and persist a department (was
+ * previously optional/absent, which is why pre-V14 queues are
+ * invisible to non-admins until an admin assigns one). The
+ * "exactly one initial queue" rule (ensureSingleInitialQueue) is
+ * scoped per department now instead of globally — flipping a new
+ * queue to initial only unsets the previous initial queue *within
+ * that same department*, leaving every other branch's initial queue
+ * untouched.
+ *
+ * getAccessibleQueues() is what "My Queue" actually calls to figure
+ * out which queues a non-admin user can see — filtered by their
+ * department, via findByStatusAndDepartment.
+ */
+
 @Service
 @RequiredArgsConstructor
 public class QueueService {

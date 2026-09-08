@@ -6,6 +6,25 @@ import lombok.*;
 
 import java.time.OffsetDateTime;
 
+/**
+ * A single workflow item — one uploaded image plus the customer
+ * details that must accompany it (idNumber, customerName,
+ * phoneNumber, added so every image is traceable to a real
+ * customer, not just a file).
+ *
+ * Two fields were added on top of the original entity to support
+ * branch isolation and traceability:
+ *  - department: the branch this item was created in (set once,
+ *    from the creating Teller's own department, in ItemService.create()).
+ *    This is what stops Koinange staff from ever seeing a Westlands item.
+ *  - idNumber / customerName / phoneNumber: required at upload time,
+ *    editable later via the AMEND action.
+ *
+ * currentQueue tracks where the item is right now; status flips to
+ * COMPLETED/REMOVED once a transition resolves to a terminal outcome
+ * instead of another queue.
+ */
+
 @Entity
 @Table(
         name = "items",
