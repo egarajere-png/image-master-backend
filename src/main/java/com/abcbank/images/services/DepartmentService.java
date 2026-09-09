@@ -3,10 +3,14 @@ package com.abcbank.images.services;
 import com.abcbank.images.domain.dto.department.DepartmentRequest;
 import com.abcbank.images.domain.dto.department.DepartmentResponse;
 import com.abcbank.images.domain.entities.Department;
+import com.abcbank.images.domain.entities.Queue;
+import com.abcbank.images.domain.entities.QueueUser;
 import com.abcbank.images.domain.entities.User;
 import com.abcbank.images.exceptions.ResourceNotFoundException;
 import com.abcbank.images.mappers.DepartmentMapper;
 import com.abcbank.images.repositories.DepartmentRepository;
+import com.abcbank.images.repositories.QueueRepository;
+import com.abcbank.images.repositories.QueueUserRepository;
 import com.abcbank.images.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,15 +18,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-/** Admin-facing CRUD for Department (branches), plus assign/remove-user and list-users-in-department. 
- * delete() refuses to remove a department that still has users assigned, to avoid silently orphaning them. */
-
 @Service
 @RequiredArgsConstructor
 public class DepartmentService {
 
     private final DepartmentRepository departmentRepository;
     private final UserRepository userRepository;
+    private final QueueRepository queueRepository;
+    private final QueueUserRepository queueUserRepository;
     private final DepartmentMapper departmentMapper;
 
     // ============================================================
@@ -198,6 +201,15 @@ public class DepartmentService {
     // ASSIGN USER TO DEPARTMENT
     // ============================================================
 
+    /**
+     * Assigns a user to a department AND syncs their queue
+     * membership to match: they're added to every queue in the new
+     * department, and — if they were previously in a different
+     * department — removed from every queue in the old one. A user
+     * should never retain queue access to a branch they no longer
+     * belong to, and shouldn't need to be manually re-added to each
+     * of their new branch's queues one at a time.
+     */
     @Transactional
     public void assignUser(
             Long departmentId,
@@ -219,6 +231,9 @@ public class DepartmentService {
                                 )
                         );
 
+        Department previousDepartment =
+                user.getDepartment();
+
         user.setDepartment(
                 department
         );
@@ -226,6 +241,17 @@ public class DepartmentService {
         userRepository.save(
                 user
         );
+
+        boolean isChangingDepartment =
+                previousDepartment != null
+                        && !previousDepartment.getId()
+                        .equals(department.getId());
+
+        if (isChangingDepartment) {
+            removeUserFromDepartmentQueues(previousDepartment, user);
+        }
+
+        addUserToDepartmentQueues(department, user);
     }
 
     // ============================================================
@@ -272,6 +298,56 @@ public class DepartmentService {
         userRepository.save(
                 user
         );
+
+        removeUserFromDepartmentQueues(department, user);
+    }
+
+    // ============================================================
+    // QUEUE MEMBERSHIP SYNC HELPERS
+    // ============================================================
+
+    private void addUserToDepartmentQueues(
+            Department department,
+            User user
+    ) {
+
+        List<Queue> departmentQueues =
+                queueRepository.findByDepartment(department);
+
+        for (Queue queue : departmentQueues) {
+
+            boolean alreadyMember =
+                    queueUserRepository.existsByQueueAndUser(
+                            queue,
+                            user
+                    );
+
+            if (!alreadyMember) {
+
+                queueUserRepository.save(
+                        QueueUser.builder()
+                                .queue(queue)
+                                .user(user)
+                                .build()
+                );
+            }
+        }
+    }
+
+    private void removeUserFromDepartmentQueues(
+            Department department,
+            User user
+    ) {
+
+        List<Queue> departmentQueues =
+                queueRepository.findByDepartment(department);
+
+        for (Queue queue : departmentQueues) {
+
+            queueUserRepository
+                    .findByQueueAndUser(queue, user)
+                    .ifPresent(queueUserRepository::delete);
+        }
     }
 
     // ============================================================
